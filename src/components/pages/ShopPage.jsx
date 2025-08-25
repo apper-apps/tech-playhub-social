@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 import { cn } from "@/utils/cn";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
-import Loading from "@/components/ui/Loading";
+import Avatar from "@/components/atoms/Avatar";
 import Error from "@/components/ui/Error";
 import Empty from "@/components/ui/Empty";
-import shopService from "@/services/api/shopService";
+import Loading from "@/components/ui/Loading";
 import userService from "@/services/api/userService";
-import { toast } from "react-toastify";
+import shopService from "@/services/api/shopService";
 
 const ShopPage = () => {
   const [items, setItems] = useState([]);
@@ -37,7 +38,7 @@ const ShopPage = () => {
       setLoading(true);
       setError(null);
       
-      const shopData = await shopService.getShopItems();
+const shopData = await shopService.getShopItems();
       const filteredItems = selectedCategory === "all" 
         ? shopData 
         : shopData.filter(item => item.category === selectedCategory);
@@ -63,8 +64,8 @@ const ShopPage = () => {
     if (!currentUser) return;
     
     // Check if user has enough currency
-    const hasEnoughCoins = currentUser.coins >= item.coinPrice;
-    const hasEnoughDiamonds = item.diamondPrice ? currentUser.diamonds >= item.diamondPrice : true;
+const hasEnoughCoins = (currentUser.coins_c || currentUser.coins) >= item.coinPrice;
+    const hasEnoughDiamonds = item.diamondPrice ? (currentUser.diamonds_c || currentUser.diamonds) >= item.diamondPrice : true;
     
     if (!hasEnoughCoins && !hasEnoughDiamonds) {
       toast.error("Insufficient funds to purchase this item!");
@@ -77,17 +78,19 @@ const ShopPage = () => {
       await shopService.purchaseItem(item.id);
       
       // Update user currency
-      if (item.coinPrice) {
+if (item.coinPrice) {
         setCurrentUser(prev => ({ 
           ...prev, 
-          coins: prev.coins - item.coinPrice 
+          coins: (prev.coins_c || prev.coins) - item.coinPrice,
+          coins_c: (prev.coins_c || prev.coins) - item.coinPrice
         }));
       }
       
-      if (item.diamondPrice) {
+if (item.diamondPrice) {
         setCurrentUser(prev => ({ 
           ...prev, 
-          diamonds: prev.diamonds - item.diamondPrice 
+          diamonds: (prev.diamonds_c || prev.diamonds) - item.diamondPrice,
+          diamonds_c: (prev.diamonds_c || prev.diamonds) - item.diamondPrice
         }));
       }
       
@@ -171,17 +174,14 @@ const ShopPage = () => {
           <div className="flex items-center space-x-2 bg-gray-800 rounded-full px-4 py-2 border border-gray-700">
             <ApperIcon name="Coins" className="w-5 h-5 text-yellow-500 coin-glow" />
             <span className="text-lg font-bold text-yellow-500">
-              {currentUser.coins.toLocaleString()}
+{(currentUser.coins_c || currentUser.coins || 0).toLocaleString()}
             </span>
-            <span className="text-sm text-gray-400">coins</span>
           </div>
-          
-          <div className="flex items-center space-x-2 bg-gray-800 rounded-full px-4 py-2 border border-gray-700">
-            <ApperIcon name="Diamond" className="w-5 h-5 text-pink-500 diamond-glow" />
+<div className="flex items-center space-x-2 bg-gray-800 rounded-full px-4 py-2 border border-gray-700">
+            <ApperIcon name="Diamond" className="w-4 h-4 text-pink-500 diamond-glow" />
             <span className="text-lg font-bold text-pink-500">
-              {currentUser.diamonds}
+              {(currentUser.diamonds_c || currentUser.diamonds || 0).toLocaleString()}
             </span>
-            <span className="text-sm text-gray-400">diamonds</span>
           </div>
         </motion.div>
       )}

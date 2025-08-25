@@ -91,17 +91,19 @@ const ProfilePage = () => {
   };
   
   const getExperienceProgress = () => {
-    if (!currentUser) return 0;
+if (!currentUser) return 0;
     
-    const currentLevelXp = currentUser.level * 1000;
-    const nextLevelXp = (currentUser.level + 1) * 1000;
-    const progress = ((currentUser.experience - currentLevelXp) / (nextLevelXp - currentLevelXp)) * 100;
+    const level = currentUser.level_c || currentUser.level;
+    const experience = currentUser.experience_c || currentUser.experience;
+    const currentLevelXp = level * 1000;
+    const nextLevelXp = (level + 1) * 1000;
+    const progress = ((experience - currentLevelXp) / (nextLevelXp - currentLevelXp)) * 100;
     
     return Math.max(0, Math.min(100, progress));
   };
   
   const getWinRate = () => {
-    if (!currentUser || currentUser.stats.gamesPlayed === 0) return 0;
+    if (!currentUser || !currentUser.stats || currentUser.stats.gamesPlayed === 0) return 0;
     return ((currentUser.stats.wins / currentUser.stats.gamesPlayed) * 100).toFixed(1);
   };
   
@@ -130,10 +132,10 @@ const ProfilePage = () => {
           {/* Avatar */}
           <div className="relative">
             <Avatar 
-              src={currentUser.avatar}
+src={currentUser.avatar_c || currentUser.avatar}
               size="2xl"
               online={true}
-              alt={currentUser.username}
+              alt={currentUser.username_c || currentUser.username}
               className="ring-4 ring-purple-500/30"
             />
             <button className="absolute -bottom-2 -right-2 bg-purple-600 hover:bg-purple-700 text-white rounded-full w-8 h-8 flex items-center justify-center transition-colors">
@@ -145,13 +147,13 @@ const ProfilePage = () => {
           <div className="flex-1 text-center md:text-left">
             <div className="flex flex-col md:flex-row md:items-center md:space-x-3 mb-3">
               <h1 className="text-3xl font-display text-white">
-                {currentUser.username}
+{currentUser.username_c || currentUser.username}
               </h1>
               
-              <div className="flex items-center justify-center md:justify-start space-x-2 mt-2 md:mt-0">
+              <div className="flex items-center space-x-4 mb-4">
                 <Badge variant="primary" size="lg">
                   <ApperIcon name="Star" className="w-4 h-4 mr-1" />
-                  Level {currentUser.level}
+                  Level {currentUser.level_c || currentUser.level}
                 </Badge>
                 
                 <Badge variant="accent">
@@ -166,33 +168,33 @@ const ProfilePage = () => {
               <div className="flex justify-between text-sm mb-1">
                 <span className="text-gray-400">Experience</span>
                 <span className="text-white font-medium">
-                  {currentUser.experience} XP
+{currentUser.experience_c || currentUser.experience} XP
                 </span>
               </div>
               
-              <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-gray-700 rounded-full h-3 mb-6 overflow-hidden">
                 <motion.div
-                  className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
+                  className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
                   initial={{ width: 0 }}
                   animate={{ width: `${getExperienceProgress()}%` }}
                   transition={{ duration: 1, ease: "easeOut" }}
                 />
               </div>
-            </div>
-            
-            {/* Currency */}
-            <div className="flex items-center justify-center md:justify-start space-x-4">
-              <div className="flex items-center space-x-2 bg-gray-800/50 rounded-full px-3 py-1">
-                <ApperIcon name="Coins" className="w-4 h-4 text-yellow-500 coin-glow" />
-                <span className="font-medium text-yellow-500">
-                  {currentUser.coins.toLocaleString()}
-                </span>
+              
+              {/* Currency */}
+              <div className="flex items-center justify-center space-x-6 mb-8">
+                <div className="flex items-center space-x-2">
+                  <ApperIcon name="Coins" className="w-5 h-5 text-yellow-500 coin-glow" />
+                  <span className="text-lg font-medium text-yellow-500">
+                    {(currentUser.coins_c || currentUser.coins || 0).toLocaleString()}
+                  </span>
+                </div>
               </div>
               
               <div className="flex items-center space-x-2 bg-gray-800/50 rounded-full px-3 py-1">
                 <ApperIcon name="Diamond" className="w-4 h-4 text-pink-500 diamond-glow" />
                 <span className="font-medium text-pink-500">
-                  {currentUser.diamonds}
+{currentUser.diamonds_c || currentUser.diamonds || 0}
                 </span>
               </div>
             </div>
