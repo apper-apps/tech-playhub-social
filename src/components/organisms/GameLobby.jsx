@@ -131,9 +131,9 @@ const GameLobby = ({
         animate={{ opacity: 1 }}
         transition={{ staggerChildren: 0.1 }}
       >
-        {games.map((game, index) => (
+{games.map((game, index) => (
           <motion.div
-            key={game.id}
+            key={game.id || `game-${index}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
