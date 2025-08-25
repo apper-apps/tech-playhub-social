@@ -1,0 +1,107 @@
+@import 'react-toastify/dist/ReactToastify.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #374151 100%);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Righteous', cursive;
+  }
+}
+
+@layer components {
+  .toast-container {
+    font-size: 14px;
+  }
+  
+  .Toastify__toast {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-family: 'Inter', sans-serif;
+    padding: 12px 16px;
+  }
+
+  .Toastify__toast--success {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+  }
+
+  .Toastify__toast--error {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+  }
+
+  .Toastify__toast--info {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+  }
+
+  .Toastify__toast--warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+  }
+
+  .game-card-glow {
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .game-card-glow:hover {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.5), 0 0 30px rgba(124, 58, 237, 0.3);
+    transform: scale(1.02);
+  }
+
+  .friend-online {
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  }
+
+  .neon-text {
+    text-shadow: 0 0 10px currentColor;
+  }
+
+  .coin-glow {
+    filter: drop-shadow(0 0 8px #fbbf24);
+  }
+
+  .diamond-glow {
+    filter: drop-shadow(0 0 8px #ec4899);
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .text-gradient-primary {
+    background: linear-gradient(135deg, #7c3aed, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}

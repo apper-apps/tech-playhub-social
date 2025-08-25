@@ -1,0 +1,72 @@
+[
+  {
+    "Id": 1,
+    "title": "Win 3 Games",
+    "description": "Win any 3 games to complete this challenge",
+    "type": "wins",
+    "requirement": 3,
+    "progress": 2,
+    "reward": {
+      "coins": 200,
+      "experience": 50
+    },
+    "createdAt": "2023-12-20T00:00:00Z",
+    "expiresAt": "2023-12-21T00:00:00Z"
+  },
+  {
+    "Id": 2,
+    "title": "Play 5 Quiz Games",
+    "description": "Complete 5 quiz games regardless of outcome",
+    "type": "games",
+    "requirement": 5,
+    "progress": 5,
+    "reward": {
+      "coins": 150,
+      "experience": 25
+    },
+    "createdAt": "2023-12-20T00:00:00Z",
+    "expiresAt": "2023-12-21T00:00:00Z"
+  },
+  {
+    "Id": 3,
+    "title": "Add a Friend",
+    "description": "Add one new friend to your friends list",
+    "type": "friends",
+    "requirement": 1,
+    "progress": 0,
+    "reward": {
+      "coins": 100,
+      "experience": 20
+    },
+    "createdAt": "2023-12-20T00:00:00Z",
+    "expiresAt": "2023-12-21T00:00:00Z"
+  },
+  {
+    "Id": 4,
+    "title": "Earn 300 Coins",
+    "description": "Earn 300 coins from game rewards and other activities",
+    "type": "coins",
+    "requirement": 300,
+    "progress": 175,
+    "reward": {
+      "coins": 100,
+      "experience": 30
+    },
+    "createdAt": "2023-12-20T00:00:00Z",
+    "expiresAt": "2023-12-21T00:00:00Z"
+  },
+  {
+    "Id": 5,
+    "title": "Reach Level 15",
+    "description": "Gain enough experience to reach level 15",
+    "type": "level",
+    "requirement": 15,
+    "progress": 12,
+    "reward": {
+      "coins": 500,
+      "experience": 100
+    },
+    "createdAt": "2023-12-20T00:00:00Z",
+    "expiresAt": "2023-12-21T00:00:00Z"
+  }
+]

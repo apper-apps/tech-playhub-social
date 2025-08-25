@@ -1,0 +1,98 @@
+[
+  {
+    "Id": 1,
+    "username": "PlayerOne",
+    "email": "player@example.com",
+    "avatar": "/avatars/avatar1.png",
+    "level": 12,
+    "experience": 12450,
+    "coins": 2500,
+    "diamonds": 150,
+    "rank": 234,
+    "stats": {
+      "gamesPlayed": 89,
+      "wins": 67,
+      "losses": 22,
+      "bestStreak": 8,
+      "favoriteGame": "quiz",
+      "favoriteGamePlays": 42,
+      "favoriteGameWinRate": 73
+    },
+    "friends": ["2", "3", "4"],
+    "achievements": ["first_win", "quiz_master", "social"],
+    "createdAt": "2023-11-15T10:30:00Z",
+    "lastActive": "2023-12-20T15:45:00Z"
+  },
+  {
+    "Id": 2,
+    "username": "GamerGirl",
+    "email": "gamer@example.com",
+    "avatar": "/avatars/avatar2.png",
+    "level": 18,
+    "experience": 18750,
+    "coins": 4200,
+    "diamonds": 300,
+    "rank": 89,
+    "stats": {
+      "gamesPlayed": 156,
+      "wins": 124,
+      "losses": 32,
+      "bestStreak": 12,
+      "favoriteGame": "cards",
+      "favoriteGamePlays": 78,
+      "favoriteGameWinRate": 85
+    },
+    "friends": ["1", "3"],
+    "achievements": ["first_win", "card_shark", "win_streak"],
+    "createdAt": "2023-10-08T14:20:00Z",
+    "lastActive": "2023-12-20T16:12:00Z"
+  },
+  {
+    "Id": 3,
+    "username": "QuizMaster",
+    "email": "quiz@example.com",
+    "avatar": "/avatars/avatar3.png",
+    "level": 25,
+    "experience": 25800,
+    "coins": 8500,
+    "diamonds": 650,
+    "rank": 15,
+    "stats": {
+      "gamesPlayed": 203,
+      "wins": 178,
+      "losses": 25,
+      "bestStreak": 20,
+      "favoriteGame": "quiz",
+      "favoriteGamePlays": 156,
+      "favoriteGameWinRate": 92
+    },
+    "friends": ["1", "2", "4"],
+    "achievements": ["first_win", "quiz_master", "legend"],
+    "createdAt": "2023-09-22T09:15:00Z",
+    "lastActive": "2023-12-20T14:30:00Z"
+  },
+  {
+    "Id": 4,
+    "username": "DiceRoller",
+    "email": "dice@example.com", 
+    "avatar": "/avatars/avatar4.png",
+    "level": 8,
+    "experience": 7900,
+    "coins": 1200,
+    "diamonds": 75,
+    "rank": 456,
+    "stats": {
+      "gamesPlayed": 45,
+      "wins": 28,
+      "losses": 17,
+      "bestStreak": 5,
+      "favoriteGame": "dice",
+      "favoriteGamePlays": 23,
+      "favoriteGameWinRate": 65
+    },
+    "friends": ["1", "3"],
+    "achievements": ["first_win", "dice_master"],
+    "createdAt": "2023-12-01T11:45:00Z",
+    "lastActive": "2023-12-20T13:22:00Z"
+  }
+]

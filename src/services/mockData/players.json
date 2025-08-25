@@ -1,0 +1,101 @@
+[
+  {
+    "Id": 1,
+    "userId": "user1",
+    "username": "PlayerOne",
+    "avatar": "/avatars/avatar1.png",
+    "level": 12,
+    "score": 0,
+    "isReady": true,
+    "isOnline": true,
+    "joinedAt": "2023-12-20T15:30:00Z"
+  },
+  {
+    "Id": 2,
+    "userId": "user2",
+    "username": "GamerGirl",
+    "avatar": "/avatars/avatar2.png",
+    "level": 18,
+    "score": 150,
+    "isReady": true,
+    "isOnline": true,
+    "joinedAt": "2023-12-20T15:25:00Z"
+  },
+  {
+    "Id": 3,
+    "userId": "user3",
+    "username": "QuizMaster",
+    "avatar": "/avatars/avatar3.png",
+    "level": 25,
+    "score": 0,
+    "isReady": false,
+    "isOnline": true,
+    "joinedAt": "2023-12-20T15:32:00Z"
+  },
+  {
+    "Id": 4,
+    "userId": "user4",
+    "username": "DiceRoller",
+    "avatar": "/avatars/avatar4.png",
+    "level": 8,
+    "score": 75,
+    "isReady": true,
+    "isOnline": true,
+    "joinedAt": "2023-12-20T15:26:00Z"
+  },
+  {
+    "Id": 5,
+    "userId": "user5",
+    "username": "LuckyPlayer",
+    "avatar": "/avatars/avatar5.png",
+    "level": 14,
+    "score": 0,
+    "isReady": false,
+    "isOnline": true,
+    "joinedAt": "2023-12-20T15:35:00Z"
+  },
+  {
+    "Id": 6,
+    "userId": "user6",
+    "username": "CardShark",
+    "avatar": "/avatars/avatar6.png",
+    "level": 20,
+    "score": 200,
+    "isReady": true,
+    "isOnline": true,
+    "joinedAt": "2023-12-20T15:27:00Z"
+  },
+  {
+    "Id": 7,
+    "userId": "user7",
+    "username": "PartyKing",
+    "avatar": "/avatars/avatar7.png",
+    "level": 11,
+    "score": 0,
+    "isReady": true,
+    "isOnline": true,
+    "joinedAt": "2023-12-20T15:22:00Z"
+  },
+  {
+    "Id": 8,
+    "userId": "user8", 
+    "username": "BrainMaster",
+    "avatar": "/avatars/avatar8.png",
+    "level": 22,
+    "score": 0,
+    "isReady": false,
+    "isOnline": true,
+    "joinedAt": "2023-12-20T15:40:00Z"
+  },
+  {
+    "Id": 9,
+    "userId": "user9",
+    "username": "SpeedyCard",
+    "avatar": "/avatars/avatar9.png",
+    "level": 16,
+    "score": 0,
+    "isReady": false,
+    "isOnline": true,
+    "joinedAt": "2023-12-20T15:46:00Z"
+  }
+]
