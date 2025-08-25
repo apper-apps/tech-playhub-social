@@ -12,12 +12,12 @@ const GamesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [showCreateModal, setShowCreateModal] = useState(false);
   
-  const categories = [
-    { id: "all", name: "All Games", icon: "Grid3x3", count: 12 },
-    { id: "quiz", name: "Quiz", icon: "Brain", count: 4 },
-    { id: "cards", name: "Cards", icon: "Spade", count: 3 },
-    { id: "dice", name: "Dice", icon: "Dice1", count: 2 },
-    { id: "party", name: "Party", icon: "PartyPopper", count: 3 }
+const categories = [
+    { id: "all", name: "All Games", icon: "Grid3x3", count: 24 },
+    { id: "quiz", name: "Quiz", icon: "Brain", count: 8 },
+    { id: "cards", name: "Cards", icon: "Spade", count: 6 },
+    { id: "dice", name: "Dice", icon: "Dice1", count: 5 },
+    { id: "party", name: "Party", icon: "PartyPopper", count: 5 }
   ];
   
   const handleJoinGame = (game) => {
@@ -105,14 +105,14 @@ const GamesPage = () => {
           </Badge>
         </div>
         
-        <div className="flex items-center justify-between">
+<div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="text-center">
-              <p className="text-2xl font-bold text-gradient-accent">1,500</p>
+              <p className="text-2xl font-bold text-gradient-accent">2,500</p>
               <p className="text-xs text-gray-400">Prize Pool</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-white">124</p>
+              <p className="text-2xl font-bold text-white">246</p>
               <p className="text-xs text-gray-400">Players</p>
             </div>
           </div>

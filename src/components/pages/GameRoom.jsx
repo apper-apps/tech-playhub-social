@@ -371,8 +371,8 @@ const GameRoom = () => {
                 
                 <h2 className="text-3xl font-display text-gradient-accent mb-3">
                   Game Complete!
-                </h2>
-                <p className="text-xl text-white mb-2">You earned 150 coins! 🎉</p>
+</h2>
+                <p className="text-xl text-white mb-2">You earned 250 coins! 🎉</p>
                 <p className="text-gray-400 mb-6">Great job on completing the quiz!</p>
                 
                 <div className="space-y-3">

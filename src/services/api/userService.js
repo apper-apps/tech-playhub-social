@@ -36,22 +36,22 @@ const userService = {
       const response = await apperClient.fetchRecords('user_profile_c', params);
       
       if (!response.success || !response.data || response.data.length === 0) {
-        // Return mock user if no database user found
+// Return mock user if no database user found
         return {
           Id: 1,
           username: "PlayerOne",
           email: "player@example.com",
           avatar: "/avatars/avatar1.png",
-          level: 12,
-          experience: 12450,
-          coins: 2500,
-          diamonds: 150,
-          rank: 234,
+          level: 1,
+          experience: 0,
+          coins: 500,
+          diamonds: 5,
+          rank: 999,
           stats: {
-            gamesPlayed: 89,
-            wins: 67,
-            losses: 22,
-            bestStreak: 8
+            gamesPlayed: 0,
+            wins: 0,
+            losses: 0,
+            bestStreak: 0
           }
         };
       }
@@ -90,22 +90,22 @@ const userService = {
       };
     } catch (error) {
       console.error("Error fetching current user:", error?.response?.data?.message || error.message);
-      // Return mock user on error
+// Return mock user on error
       return {
         Id: 1,
         username: "PlayerOne",
         email: "player@example.com",
         avatar: "/avatars/avatar1.png",
-        level: 12,
-        experience: 12450,
-        coins: 2500,
-        diamonds: 150,
-        rank: 234,
+        level: 1,
+        experience: 0,
+        coins: 500,
+        diamonds: 5,
+        rank: 999,
         stats: {
-          gamesPlayed: 89,
-          wins: 67,
-          losses: 22,
-          bestStreak: 8
+          gamesPlayed: 0,
+          wins: 0,
+          losses: 0,
+          bestStreak: 0
         }
       };
     }

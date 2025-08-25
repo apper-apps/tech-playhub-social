@@ -30,13 +30,15 @@ const Header = ({ className = "" }) => {
     }
   };
   
-  const loadNotifications = async () => {
+const loadNotifications = async () => {
     try {
       // Mock notifications for demo
       setNotifications([
-        { id: 1, type: "friend", message: "Alex sent you a friend request", time: "2m ago" },
-        { id: 2, type: "game", message: "You won Quiz Master challenge!", time: "5m ago" },
-        { id: 3, type: "system", message: "Daily login bonus claimed", time: "1h ago" }
+        { id: 1, type: "friend", message: "Sarah challenged you to a Quiz Battle! 🧠", time: "1m ago" },
+        { id: 2, type: "game", message: "Victory! You earned 250 coins from Dice Master! 🎲💰", time: "3m ago" },
+        { id: 3, type: "achievement", message: "Level Up! You reached Level 5! ⭐", time: "8m ago" },
+        { id: 4, type: "tournament", message: "Daily Tournament starting in 15 minutes! 🏆", time: "12m ago" },
+        { id: 5, type: "system", message: "Weekend Bonus: Double coins active! 💎", time: "1h ago" }
       ]);
     } catch (error) {
       console.error("Failed to load notifications:", error);
