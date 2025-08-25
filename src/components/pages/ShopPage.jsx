@@ -20,12 +20,12 @@ const ShopPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [purchasingItem, setPurchasingItem] = useState(null);
   
-  const categories = [
+const categories = [
     { id: "all", name: "All Items", icon: "Grid3x3" },
     { id: "avatars", name: "Avatars", icon: "User" },
     { id: "themes", name: "Themes", icon: "Palette" },
     { id: "emojis", name: "Emojis", icon: "Smile" },
-    { id: "coins", name: "Coin Packs", icon: "Coins" }
+    { id: "coins", name: "Premium Packs", icon: "Coins" }
   ];
   
   useEffect(() => {
@@ -64,8 +64,9 @@ const shopData = await shopService.getShopItems();
     if (!currentUser) return;
     
     // Check if user has enough currency
-const hasEnoughCoins = (currentUser.coins_c || currentUser.coins) >= item.coinPrice;
+const hasEnoughCoins = item.coinPrice ? (currentUser.coins_c || currentUser.coins) >= item.coinPrice : true;
     const hasEnoughDiamonds = item.diamondPrice ? (currentUser.diamonds_c || currentUser.diamonds) >= item.diamondPrice : true;
+    const canAffordRealMoney = item.realMoneyPrice ? true : true; // Real money purchases handled externally
     
     if (!hasEnoughCoins && !hasEnoughDiamonds) {
       toast.error("Insufficient funds to purchase this item!");
@@ -78,7 +79,15 @@ const hasEnoughCoins = (currentUser.coins_c || currentUser.coins) >= item.coinPr
       await shopService.purchaseItem(item.id);
       
       // Update user currency
-if (item.coinPrice) {
+// Handle real money purchases
+      if (item.isRealMoney && item.realMoneyPrice) {
+        toast.success(`Redirecting to payment gateway for $${item.realMoneyPrice}`);
+        // In real implementation, integrate with payment processor
+        return;
+      }
+      
+      // Handle virtual currency purchases
+      if (item.coinPrice) {
         setCurrentUser(prev => ({ 
           ...prev, 
           coins: (prev.coins_c || prev.coins) - item.coinPrice,
@@ -86,7 +95,7 @@ if (item.coinPrice) {
         }));
       }
       
-if (item.diamondPrice) {
+      if (item.diamondPrice) {
         setCurrentUser(prev => ({ 
           ...prev, 
           diamonds: (prev.diamonds_c || prev.diamonds) - item.diamondPrice,
@@ -164,24 +173,28 @@ if (item.diamondPrice) {
       </div>
       
       {/* User Currency Display */}
-      {currentUser && (
+{currentUser && (
         <motion.div 
-          className="flex justify-center space-x-6"
+          className="flex justify-center space-x-4"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="flex items-center space-x-2 bg-gray-800 rounded-full px-4 py-2 border border-gray-700">
+          <div className="flex items-center space-x-2 bg-gradient-to-r from-yellow-900/20 to-yellow-800/20 rounded-full px-4 py-2 border border-yellow-500/30">
             <ApperIcon name="Coins" className="w-5 h-5 text-yellow-500 coin-glow" />
             <span className="text-lg font-bold text-yellow-500">
-{(currentUser.coins_c || currentUser.coins || 0).toLocaleString()}
+              {(currentUser.coins_c || currentUser.coins || 0).toLocaleString()}
             </span>
           </div>
-<div className="flex items-center space-x-2 bg-gray-800 rounded-full px-4 py-2 border border-gray-700">
+          <div className="flex items-center space-x-2 bg-gradient-to-r from-pink-900/20 to-pink-800/20 rounded-full px-4 py-2 border border-pink-500/30">
             <ApperIcon name="Diamond" className="w-4 h-4 text-pink-500 diamond-glow" />
             <span className="text-lg font-bold text-pink-500">
               {(currentUser.diamonds_c || currentUser.diamonds || 0).toLocaleString()}
             </span>
+          </div>
+          <div className="flex items-center space-x-2 bg-gradient-to-r from-green-900/20 to-green-800/20 rounded-full px-4 py-2 border border-green-500/30">
+            <ApperIcon name="CreditCard" className="w-4 h-4 text-green-500" />
+            <span className="text-sm font-medium text-green-500">Premium</span>
           </div>
         </motion.div>
       )}
@@ -210,46 +223,53 @@ if (item.diamondPrice) {
       </motion.div>
       
       {/* Featured Item */}
-      <motion.div
-        className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-2xl p-6 border border-purple-500/20"
+<motion.div
+        className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-2xl p-6 border border-purple-500/20 relative overflow-hidden"
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.4 }}
       >
+        <div className="absolute top-0 right-0 bg-gradient-to-l from-yellow-500 to-orange-500 text-black px-3 py-1 rounded-bl-lg">
+          <span className="text-xs font-bold">PREMIUM</span>
+        </div>
+        
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center">
-              <ApperIcon name="Star" className="w-6 h-6 text-white" />
+            <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center animate-pulse-glow">
+              <ApperIcon name="Star" className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-display text-white">Daily Deal</h2>
-              <p className="text-sm text-gray-400">50% off for today only!</p>
+              <h2 className="text-xl font-display text-white">Legendary Bundle</h2>
+              <p className="text-sm text-gray-400">Exclusive premium collection!</p>
             </div>
           </div>
           
           <Badge variant="accent" className="animate-pulse">
             <ApperIcon name="Clock" className="w-3 h-3 mr-1" />
-            12h 34m left
+            8h 42m left
           </Badge>
         </div>
         
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-              <ApperIcon name="Crown" className="w-8 h-8 text-white" />
+            <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-xl flex items-center justify-center animate-glow">
+              <ApperIcon name="Crown" className="w-10 h-10 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-display text-white">Royal Crown Avatar</h3>
-              <p className="text-sm text-gray-400">Show your royal status</p>
-              <div className="flex items-center space-x-2 mt-1">
-                <span className="text-yellow-500 line-through">1000</span>
-                <span className="text-xl font-bold text-yellow-500">500 coins</span>
+              <h3 className="text-lg font-display text-white">Dragon Emperor Pack</h3>
+              <p className="text-sm text-gray-400">Avatar + Theme + 5000 Coins + 50 Diamonds</p>
+              <div className="flex items-center space-x-3 mt-2">
+                <div className="flex items-center space-x-1">
+                  <span className="text-green-400 line-through text-sm">$9.99</span>
+                  <span className="text-xl font-bold text-green-400">$4.99</span>
+                </div>
+                <Badge variant="success" className="text-xs">50% OFF</Badge>
               </div>
             </div>
           </div>
           
-          <Button variant="accent" size="lg">
-            <ApperIcon name="ShoppingCart" className="w-5 h-5 mr-2" />
+          <Button variant="accent" size="lg" className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600">
+            <ApperIcon name="CreditCard" className="w-5 h-5 mr-2" />
             Buy Now
           </Button>
         </div>

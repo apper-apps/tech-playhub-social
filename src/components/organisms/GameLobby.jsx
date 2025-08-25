@@ -20,7 +20,7 @@ const GameLobby = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  const categories = [
+const categories = [
     { id: "all", name: "All Games", icon: "Grid3x3" },
     { id: "quiz", name: "Quiz", icon: "Brain" },
     { id: "cards", name: "Cards", icon: "Spade" },
@@ -94,7 +94,7 @@ const GameLobby = ({
         title="No active games"
         description="Be the first to start a game and invite your friends to play!"
         icon="Gamepad2"
-        action={() => handleCreateGame(selectedCategory === "all" ? "quiz" : selectedCategory)}
+action={() => handleCreateGame(selectedCategory === "all" ? "party" : selectedCategory)}
         actionText="Create Game"
         className={className}
       />
@@ -107,7 +107,7 @@ const GameLobby = ({
       <div className="flex flex-wrap gap-3">
         <Button 
           variant="primary"
-          onClick={() => handleQuickPlay("quiz")}
+onClick={() => handleQuickPlay("party")}
           className="flex-1 sm:flex-none"
         >
           <ApperIcon name="Zap" className="w-4 h-4 mr-2" />
@@ -116,7 +116,7 @@ const GameLobby = ({
         
         <Button 
           variant="accent"
-          onClick={() => handleCreateGame(selectedCategory === "all" ? "quiz" : selectedCategory)}
+onClick={() => handleCreateGame(selectedCategory === "all" ? "party" : selectedCategory)}
           className="flex-1 sm:flex-none"
         >
           <ApperIcon name="Plus" className="w-4 h-4 mr-2" />

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { toast } from "react-toastify";
 import { cn } from "@/utils/cn";
 import ApperIcon from "@/components/ApperIcon";
-import Avatar from "@/components/atoms/Avatar";
+import ChatPanel from "@/components/molecules/ChatPanel";
 import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
-import ChatPanel from "@/components/molecules/ChatPanel";
-import Loading from "@/components/ui/Loading";
+import Avatar from "@/components/atoms/Avatar";
 import Error from "@/components/ui/Error";
-import gameService from "@/services/api/gameService";
+import Loading from "@/components/ui/Loading";
 import userService from "@/services/api/userService";
-import { toast } from "react-toastify";
+import gameService from "@/services/api/gameService";
 
 const GameRoom = () => {
   const { gameId } = useParams();
@@ -29,31 +29,56 @@ const GameRoom = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   
   // Mock quiz question
-  const mockQuestions = [
+const [questions, setQuestions] = useState([
     {
       id: 1,
-      question: "What is the capital of France?",
-      options: ["London", "Berlin", "Paris", "Madrid"],
-      correct: 2,
-      timeLimit: 30
+      question: "What is the largest planet in our solar system?",
+      options: ["Earth", "Jupiter", "Saturn", "Neptune"],
+      correct: 1,
+      timeLimit: 30,
+      category: "science"
     },
     {
       id: 2,
-      question: "Which planet is known as the Red Planet?",
-      options: ["Venus", "Mars", "Jupiter", "Saturn"],
+      question: "Which programming language is known as the 'language of the web'?",
+      options: ["Python", "Java", "JavaScript", "C++"],
+      correct: 2,
+      timeLimit: 25,
+      category: "technology"
+    },
+    {
+      id: 3,
+      question: "In which year did the Berlin Wall fall?",
+      options: ["1987", "1989", "1991", "1993"],
       correct: 1,
-      timeLimit: 30
+      timeLimit: 30,
+      category: "history"
+    },
+    {
+      id: 4,
+      question: "What is the chemical symbol for gold?",
+      options: ["Go", "Gd", "Au", "Ag"],
+      correct: 2,
+      timeLimit: 20,
+      category: "science"
     }
-  ];
+  ]);
   
   useEffect(() => {
-    loadGameData();
+loadGameData();
     loadCurrentUser();
     
-    // Mock real-time updates
+    // Enhanced real-time game timer
     const interval = setInterval(() => {
       if (gameState === "playing" && timeLeft > 0) {
-        setTimeLeft(prev => prev - 1);
+        setTimeLeft(prev => {
+          const newTime = prev - 1;
+          if (newTime === 0) {
+            // Auto-submit when time runs out
+            handleSubmitAnswer();
+          }
+          return newTime;
+        });
       }
     }, 1000);
     
@@ -85,8 +110,17 @@ const GameRoom = () => {
           username: "Sarah",
           avatar: "/avatars/avatar3.png",
           content: "Let's do this! 🔥",
-          type: "text",
+type: "text",
           timestamp: new Date(Date.now() - 30000)
+        },
+        {
+          id: "4",
+          playerId: "player2",
+          playerName: "Alex",
+          avatar: "/avatars/avatar2.png",
+          message: "This is getting intense! 🔥",
+          type: "text",
+          timestamp: new Date(Date.now() - 15000)
         }
       ]);
       
@@ -108,8 +142,8 @@ const GameRoom = () => {
   
   const handleStartGame = () => {
     setGameState("playing");
-    setTimeLeft(mockQuestions[0].timeLimit);
-    toast.success("Game started! Good luck!");
+setTimeLeft(questions[0]?.timeLimit || 30);
+    toast.success("🎮 Game started! Show your skills!");
   };
   
   const handleLeaveGame = () => {
@@ -124,21 +158,29 @@ const GameRoom = () => {
   const handleSubmitAnswer = () => {
     if (selectedAnswer !== null) {
       // Mock answer submission
-      const correct = selectedAnswer === mockQuestions[currentQuestion].correct;
+const currentQuestionData = questions[currentQuestion];
+      const correct = selectedAnswer === currentQuestionData.correct;
+      const points = correct ? (timeLeft > 15 ? 150 : timeLeft > 5 ? 100 : 50) : 0;
+      
       if (correct) {
-        toast.success("+100 points! Correct answer! 🎉");
+        toast.success(`🎯 Correct! +${points} points! ${timeLeft > 15 ? 'Lightning fast!' : 'Nice job!'}`);
       } else {
-        toast.error("Wrong answer! Better luck next time.");
+        const correctAnswer = currentQuestionData.options[currentQuestionData.correct];
+        toast.error(`❌ Wrong! Correct answer: ${correctAnswer}`);
       }
       
       // Move to next question or end game
-      if (currentQuestion < mockQuestions.length - 1) {
-        setCurrentQuestion(prev => prev + 1);
-        setSelectedAnswer(null);
-        setTimeLeft(mockQuestions[currentQuestion + 1].timeLimit);
+      if (currentQuestion < questions.length - 1) {
+        setTimeout(() => {
+          setCurrentQuestion(prev => prev + 1);
+          setSelectedAnswer(null);
+          setTimeLeft(questions[currentQuestion + 1]?.timeLimit || 30);
+        }, 2000); // Give time to see the correct answer
       } else {
-        setGameState("finished");
-        toast.success("Game completed! 🏆");
+        setTimeout(() => {
+          setGameState("finished");
+          toast.success("🏆 Quiz completed! Great job!");
+        }, 2000);
       }
     }
   };
@@ -295,47 +337,48 @@ const GameRoom = () => {
               className="max-w-4xl mx-auto"
             >
               {/* Question */}
+{/* Question */}
               <div className="bg-gray-800 rounded-xl p-6 mb-6 border border-gray-700">
                 <div className="flex items-center justify-between mb-4">
-                  <Badge variant="primary">
-                    Question {currentQuestion + 1} of {mockQuestions.length}
+                  <Badge variant="outline" className="bg-purple-900/30">
+                    Question {currentQuestion + 1} of {questions.length}
                   </Badge>
-                  
-                  <div className="text-right">
-                    <p className="text-sm text-gray-400">Time Remaining</p>
-                    <p className="text-2xl font-bold text-white font-mono">{timeLeft}s</p>
-                  </div>
+                  <Badge variant={timeLeft > 10 ? "success" : "error"}>
+                    {timeLeft}s remaining
+                  </Badge>
                 </div>
                 
                 <h2 className="text-2xl font-display text-white mb-6">
-                  {mockQuestions[currentQuestion].question}
+                  {questions[currentQuestion]?.question}
                 </h2>
-                
                 {/* Answer Options */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  {mockQuestions[currentQuestion].options.map((option, index) => (
+{questions[currentQuestion]?.options.map((option, index) => (
                     <motion.button
                       key={index}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => handleAnswerSelect(index)}
                       className={cn(
-                        "p-4 rounded-lg border-2 text-left transition-all duration-200",
+                        "p-4 rounded-xl border-2 text-left transition-all duration-200 relative",
                         selectedAnswer === index
-                          ? "border-purple-500 bg-purple-900/30 text-white"
-                          : "border-gray-600 bg-gray-700 text-gray-300 hover:border-gray-500"
+                          ? "border-purple-500 bg-gradient-to-r from-purple-900/50 to-pink-900/50 text-white shadow-lg"
+                          : "border-gray-600 bg-gray-800 text-gray-300 hover:border-purple-400 hover:bg-gray-700"
                       )}
                     >
                       <div className="flex items-center space-x-3">
                         <div className={cn(
-                          "w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold",
+                          "w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all",
                           selectedAnswer === index
-                            ? "bg-purple-500 text-white"
+                            ? "bg-purple-500 text-white shadow-md"
                             : "bg-gray-600 text-gray-300"
                         )}>
                           {String.fromCharCode(65 + index)}
                         </div>
-                        <span className="flex-1">{option}</span>
+                        <span className="flex-1 font-medium">{option}</span>
+                        {selectedAnswer === index && (
+                          <ApperIcon name="Check" className="w-5 h-5 text-purple-400" />
+                        )}
                       </div>
                     </motion.button>
                   ))}
@@ -372,7 +415,19 @@ const GameRoom = () => {
                 <h2 className="text-3xl font-display text-gradient-accent mb-3">
                   Game Complete!
 </h2>
-                <p className="text-xl text-white mb-2">You earned 250 coins! 🎉</p>
+                <div className="bg-gradient-to-r from-green-900/20 to-emerald-900/20 rounded-lg p-4 border border-green-500/30 mb-4">
+                  <p className="text-xl text-white mb-2">🎉 Congratulations! You earned:</p>
+                  <div className="flex items-center justify-center space-x-4 text-lg">
+                    <div className="flex items-center">
+                      <ApperIcon name="Coins" className="w-6 h-6 text-yellow-500 mr-2 coin-glow" />
+                      <span className="text-yellow-500 font-bold">350 Coins</span>
+                    </div>
+                    <div className="flex items-center">
+                      <ApperIcon name="Diamond" className="w-5 h-5 text-pink-500 mr-2 diamond-glow" />
+                      <span className="text-pink-500 font-bold">5 Diamonds</span>
+                    </div>
+                  </div>
+                </div>
                 <p className="text-gray-400 mb-6">Great job on completing the quiz!</p>
                 
                 <div className="space-y-3">

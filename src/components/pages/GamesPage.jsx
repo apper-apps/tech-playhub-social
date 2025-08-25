@@ -13,11 +13,11 @@ const GamesPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   
 const categories = [
-    { id: "all", name: "All Games", icon: "Grid3x3", count: 24 },
-    { id: "quiz", name: "Quiz", icon: "Brain", count: 8 },
-    { id: "cards", name: "Cards", icon: "Spade", count: 6 },
-    { id: "dice", name: "Dice", icon: "Dice1", count: 5 },
-    { id: "party", name: "Party", icon: "PartyPopper", count: 5 }
+    { id: "all", name: "All Games", icon: "Grid3x3", count: 28 },
+    { id: "quiz", name: "Quiz", icon: "Brain", count: 10 },
+    { id: "cards", name: "Cards", icon: "Spade", count: 8 },
+    { id: "dice", name: "Dice", icon: "Dice1", count: 6 },
+    { id: "party", name: "Party", icon: "PartyPopper", count: 4 }
   ];
   
   const handleJoinGame = (game) => {
@@ -82,44 +82,52 @@ const categories = [
       </motion.div>
       
       {/* Featured Games Section */}
-      <motion.div
-        className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-2xl p-6 border border-purple-500/20"
+<motion.div
+        className="bg-gradient-to-r from-purple-900/30 via-pink-900/30 to-orange-900/30 rounded-2xl p-6 border border-purple-500/20 relative overflow-hidden"
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}
       >
+        <div className="absolute top-0 right-0 bg-gradient-to-l from-red-500 to-pink-500 text-white px-3 py-1 rounded-bl-lg">
+          <span className="text-xs font-bold">LIVE</span>
+        </div>
+        
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center">
-              <ApperIcon name="Trophy" className="w-6 h-6 text-white" />
+            <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center animate-pulse-glow">
+              <ApperIcon name="Trophy" className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-display text-white">Daily Tournament</h2>
-              <p className="text-sm text-gray-400">Compete for amazing rewards!</p>
+              <h2 className="text-xl font-display text-white">Epic Championship</h2>
+              <p className="text-sm text-gray-400">Battle royale across all game modes!</p>
             </div>
           </div>
           
-          <Badge variant="accent" className="animate-pulse">
+          <Badge variant="accent" className="animate-pulse bg-red-500/20 text-red-400 border-red-500/30">
             <ApperIcon name="Clock" className="w-3 h-3 mr-1" />
-            2h 15m left
+            1h 27m left
           </Badge>
         </div>
         
-<div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-6">
             <div className="text-center">
-              <p className="text-2xl font-bold text-gradient-accent">2,500</p>
-              <p className="text-xs text-gray-400">Prize Pool</p>
+              <p className="text-3xl font-bold text-gradient-accent">7,500</p>
+              <p className="text-xs text-gray-400">Diamond Prize</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-white">246</p>
-              <p className="text-xs text-gray-400">Players</p>
+              <p className="text-3xl font-bold text-white">892</p>
+              <p className="text-xs text-gray-400">Active Players</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-green-400">$500</p>
+              <p className="text-xs text-gray-400">Cash Prize</p>
             </div>
           </div>
           
-          <Button variant="accent" size="lg">
+          <Button variant="accent" size="lg" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
             <ApperIcon name="Trophy" className="w-5 h-5 mr-2" />
-            Join Tournament
+            Join Championship
           </Button>
         </div>
       </motion.div>

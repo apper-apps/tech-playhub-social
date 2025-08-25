@@ -11,13 +11,15 @@ const shopService = {
         apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
       });
       
-      const params = {
+const params = {
         fields: [
           { field: { Name: "Name" } },
           { field: { Name: "description_c" } },
           { field: { Name: "category_c" } },
           { field: { Name: "coin_price_c" } },
           { field: { Name: "diamond_price_c" } },
+          { field: { Name: "real_money_price_c" } },
+          { field: { Name: "is_real_money_c" } },
           { field: { Name: "rarity_c" } },
           { field: { Name: "is_new_c" } },
           { field: { Name: "is_featured_c" } },
@@ -35,13 +37,15 @@ const shopService = {
       }
       
       // Transform to expected format
-      return response.data.map(item => ({
+return response.data.map(item => ({
         Id: item.Id,
         name: item.Name,
         description: item.description_c,
         category: item.category_c,
         coinPrice: item.coin_price_c,
         diamondPrice: item.diamond_price_c,
+        realMoneyPrice: item.real_money_price_c,
+        isRealMoney: item.is_real_money_c || false,
         rarity: item.rarity_c,
         isNew: item.is_new_c || false,
         isFeatured: item.is_featured_c || false,
@@ -65,12 +69,14 @@ const shopService = {
       });
       
       const params = {
-        fields: [
+fields: [
           { field: { Name: "Name" } },
           { field: { Name: "description_c" } },
           { field: { Name: "category_c" } },
           { field: { Name: "coin_price_c" } },
           { field: { Name: "diamond_price_c" } },
+          { field: { Name: "real_money_price_c" } },
+          { field: { Name: "is_real_money_c" } },
           { field: { Name: "rarity_c" } },
           { field: { Name: "is_new_c" } },
           { field: { Name: "is_featured_c" } },
@@ -94,13 +100,15 @@ const shopService = {
       }
       
       // Transform to expected format
-      return response.data.map(item => ({
+return response.data.map(item => ({
         Id: item.Id,
         name: item.Name,
         description: item.description_c,
         category: item.category_c,
         coinPrice: item.coin_price_c,
         diamondPrice: item.diamond_price_c,
+        realMoneyPrice: item.real_money_price_c,
+        isRealMoney: item.is_real_money_c || false,
         rarity: item.rarity_c,
         isNew: item.is_new_c || false,
         isFeatured: item.is_featured_c || false,
@@ -124,12 +132,14 @@ const shopService = {
       });
       
       const params = {
-        fields: [
+fields: [
           { field: { Name: "Name" } },
           { field: { Name: "description_c" } },
           { field: { Name: "category_c" } },
           { field: { Name: "coin_price_c" } },
           { field: { Name: "diamond_price_c" } },
+          { field: { Name: "real_money_price_c" } },
+          { field: { Name: "is_real_money_c" } },
           { field: { Name: "rarity_c" } },
           { field: { Name: "is_new_c" } },
           { field: { Name: "is_featured_c" } },
@@ -153,13 +163,15 @@ const shopService = {
       }
       
       // Transform to expected format
-      return response.data.map(item => ({
+return response.data.map(item => ({
         Id: item.Id,
         name: item.Name,
         description: item.description_c,
         category: item.category_c,
         coinPrice: item.coin_price_c,
         diamondPrice: item.diamond_price_c,
+        realMoneyPrice: item.real_money_price_c,
+        isRealMoney: item.is_real_money_c || false,
         rarity: item.rarity_c,
         isNew: item.is_new_c || false,
         isFeatured: item.is_featured_c || false,
@@ -184,7 +196,7 @@ const shopService = {
       
       // Mark item as purchased
       const params = {
-        records: [{
+records: [{
           Id: parseInt(itemId),
           is_purchased_c: true
         }]
@@ -207,8 +219,7 @@ const shopService = {
       throw error;
     }
   },
-
-  async getUserPurchases() {
+async getUserPurchases() {
     try {
       await delay(400);
       
@@ -221,7 +232,10 @@ const shopService = {
       const params = {
         fields: [
           { field: { Name: "Name" } },
-          { field: { Name: "CreatedOn" } }
+          { field: { Name: "CreatedOn" } },
+          { field: { Name: "category_c" } },
+          { field: { Name: "rarity_c" } },
+          { field: { Name: "is_real_money_c" } }
         ],
         where: [
           {
@@ -229,7 +243,8 @@ const shopService = {
             Operator: "EqualTo",
             Values: [true]
           }
-        ]
+        ],
+        orderBy: [{ fieldName: "CreatedOn", sorttype: "DESC" }]
       };
       
       const response = await apperClient.fetchRecords('shop_item_c', params);
@@ -242,6 +257,10 @@ const shopService = {
       // Transform to expected format
       return response.data.map(item => ({
         Id: item.Id,
+        name: item.Name,
+        category: item.category_c,
+        rarity: item.rarity_c,
+        isRealMoney: item.is_real_money_c || false,
         purchasedAt: item.CreatedOn
       }));
     } catch (error) {
